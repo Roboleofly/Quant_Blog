@@ -66,14 +66,28 @@
   .th-tag.risk{background:#E2D9F3;color:#432874;}
   .th-tag.trend{background:#FFF3CD;color:#856404;}
   .th-tag.base{background:#F8D7DA;color:#721C24;}
-  .th-body{font-size:12px;line-height:1.65;color:var(--text);margin-bottom:10px;}
-  .formula{background:#F4F6FA;border-left:3px solid var(--navy);padding:8px 12px;
-            font-family:'Courier New',monospace;font-size:11px;color:#1A1A2E;border-radius:0 3px 3px 0;}
+  .th-body{font-size:12px;line-height:1.65;color:var(--text);margin-bottom:12px;}
+  .formula-block{background:#F4F6FA;border-left:3px solid var(--navy);
+                 padding:12px 16px;border-radius:0 4px 4px 0;margin-top:4px;
+                 overflow-x:auto;}
+  .formula-block .katex-display{margin:4px 0;}
+  .formula-block .katex{font-size:1.05em;}
+  .constraint{margin-top:6px;font-size:11px;color:var(--muted);}
+  .constraint .katex{font-size:0.98em;}
   footer{background:var(--navy);padding:24px 48px;margin-top:60px;}
   footer p{font-size:10px;color:#7A91B0;line-height:1.7;}
   .fbrand{font-size:11px;font-weight:700;color:var(--gold);letter-spacing:2px;margin-bottom:10px;}
   hr.foot{border:none;border-top:1px solid rgba(255,255,255,.15);margin-bottom:16px;}
 </style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[
+    {left:'\\[',right:'\\]',display:true},
+    {left:'\\(',right:'\\)',display:false}
+  ],throwOnError:false});"></script>
+
 </head>
 <body>
 
@@ -124,61 +138,56 @@
         <div class="th-card">
           <div class="th-name">Equal Weight (Annual Rebal)</div>
           <span class="th-tag base">Baseline</span>
-          <div class="th-body">Harry Browne's Permanent Portfolio: equal capital allocation across uncorrelated assets, rebalanced annually. Simplicity is the key advantage — no forecasts required. Annual rebalancing captures the mean-reversion premium by systematically buying underperformers.</div>
-          <div class="formula">w_i = 1/N = 25%  for all i</div>
+          <div class="th-body">Harry Browne's Permanent Portfolio: equal capital allocation across uncorrelated assets, rebalanced annually. No forecasts required. Annual rebalancing captures the mean-reversion premium by systematically buying underperformers.</div>
+          <div class="formula-block">\[w_i = \frac{1}{N} = 25\% \quad \forall\, i\]</div>
         </div>
         <div class="th-card">
           <div class="th-name">Inverse Volatility</div>
           <span class="th-tag risk">Risk-Based</span>
-          <div class="th-body">Lower-volatility assets receive proportionally higher capital allocation. Derived from the low-volatility anomaly (Baker & Haugen, 2012): low-vol assets earn excess risk-adjusted returns. Effectively equalizes absolute dollar-risk contribution without a full covariance matrix.</div>
-          <div class="formula">w_i = (1/σ_i) / Σ(1/σ_j),   σ_i = 12-month rolling ann. vol</div>
+          <div class="th-body">Lower-volatility assets receive proportionally higher capital allocation. Derived from the low-volatility anomaly (Baker &amp; Haugen, 2012). Equalizes absolute dollar-risk contribution without a full covariance matrix.</div>
+          <div class="formula-block">\[w_i = \frac{1/\hat{\sigma}_i}{\displaystyle\sum_{j=1}^{N} 1/\hat{\sigma}_j}\]<div class="constraint">\(\hat{\sigma}_i = \text{12-month rolling annualised volatility}\)</div></div>
         </div></div><div class="theory-grid">
         <div class="th-card">
           <div class="th-name">Momentum Tilt</div>
           <span class="th-tag mom">Momentum</span>
-          <div class="th-body">Cross-sectional momentum (Jegadeesh & Titman, 1993): assets with stronger 12-month relative performance tend to continue outperforming the near term. Rank-based weights overweight recent leaders; rebalanced monthly.</div>
-          <div class="formula">w_i ∝ rank_i(R_12m)   [rank 1=worst → 4=best, normalized to sum=1]</div>
+          <div class="th-body">Cross-sectional momentum (Jegadeesh &amp; Titman, 1993): assets with stronger 12-month relative performance tend to continue outperforming. Rank-based weights overweight recent leaders; rebalanced monthly.</div>
+          <div class="formula-block">\[w_i \;\propto\; \text{rank}_i\!\left(R^{12m}\right)\]<div class="constraint">\(\text{rank } 1 = \text{worst},\; 4 = \text{best};\quad \sum w_i = 1\)</div></div>
         </div>
         <div class="th-card">
           <div class="th-name">Trend Following (SMA12)</div>
           <span class="th-tag trend">Trend</span>
-          <div class="th-body">Moving average filter identifies bull/bear regimes. Assets above their 12-month SMA are held in equal weight; assets below are replaced with cash (0%). Aims to avoid extended drawdowns by exiting during confirmed downtrends.</div>
-          <div class="formula">w_i = 1/k  if P_i > SMA_12(P_i),  else 0   [k = # assets in uptrend]</div>
+          <div class="th-body">Moving-average filter identifies bull/bear regimes. Assets above their 12-month SMA are held in equal weight; assets below are replaced with cash. Aims to avoid extended drawdowns by exiting during confirmed downtrends.</div>
+          <div class="formula-block">\[w_i = \begin{cases} \dfrac{1}{k} & \text{if } P_i > \overline{P}_i^{\,12m} \\ 0 & \text{otherwise} \end{cases}\]<div class="constraint">\(k = \text{number of assets currently in uptrend}\)</div></div>
         </div></div><div class="theory-grid">
         <div class="th-card">
           <div class="th-name">Dual Momentum</div>
           <span class="th-tag mom">Momentum</span>
-          <div class="th-body">Antonacci (2014): combines absolute momentum (asset vs. 0%) and relative momentum (cross-asset ranking). Only holds assets that pass both filters — positive 12-month return AND top relative rank. Allocates equally to cash when no assets qualify.</div>
-          <div class="formula">Hold if: R_12m > 0  AND  cross-rank is top tier;
-weight ∝ rank among qualifying assets</div>
+          <div class="th-body">Antonacci (2014): combines absolute momentum (asset vs. 0%) and relative momentum (cross-asset ranking). Only holds assets that pass both filters — positive 12-month return AND top relative rank.</div>
+          <div class="formula-block">\[w_i > 0 \iff R_i^{12m} > 0 \;\wedge\; \text{rank}_i = \text{top}\]<div class="constraint">\(w_i \propto \text{rank}_i \cdot \mathbf{1}[R_i^{12m}>0];\quad \text{cash if no asset qualifies}\)</div></div>
         </div>
         <div class="th-card">
           <div class="th-name">Risk Parity (ERC)</div>
           <span class="th-tag risk">Risk-Based</span>
-          <div class="th-body">Equal Risk Contribution (Maillard, Roncalli & Teiletche, 2010): each asset contributes the same amount to total portfolio variance. Solved iteratively via constrained optimization using a rolling 36-month covariance matrix. Prevents high-vol assets from dominating the risk budget.</div>
-          <div class="formula">Solve: w_i · (Σw)_i / σ_p = const  ∀i
-subject to: Σw_i = 1,  w_i ≥ 0.05</div>
+          <div class="th-body">Equal Risk Contribution (Maillard, Roncalli &amp; Teiletche, 2010): each asset contributes equally to total portfolio variance. Solved iteratively via constrained optimisation using a rolling 36-month covariance matrix.</div>
+          <div class="formula-block">\[\frac{w_i\,(\boldsymbol{\Sigma}\mathbf{w})_i}{\sigma_p} = \frac{w_j\,(\boldsymbol{\Sigma}\mathbf{w})_j}{\sigma_p} \quad \forall\, i,j\]<div class="constraint">\(\text{s.t. } \sum w_i = 1,\quad w_i \geq 0.05\)</div></div>
         </div></div><div class="theory-grid">
         <div class="th-card">
           <div class="th-name">Minimum Variance</div>
           <span class="th-tag opt">Optimization</span>
-          <div class="th-body">Markowitz (1952) efficient frontier left endpoint: minimize portfolio variance regardless of expected returns. Uses a 36-month rolling covariance matrix. No return forecast needed — purely defensive; tends to concentrate in low-vol, negatively-correlated assets.</div>
-          <div class="formula">min  w'Σw
-s.t. Σw_i = 1,  0.05 ≤ w_i ≤ 0.60</div>
+          <div class="th-body">Markowitz (1952) efficient frontier left endpoint: minimise portfolio variance regardless of expected returns. Uses a 36-month rolling covariance matrix. No return forecast needed — tends to concentrate in low-vol, negatively-correlated assets.</div>
+          <div class="formula-block">\[\min_{\mathbf{w}}\; \mathbf{w}^\top \boldsymbol{\Sigma}\, \mathbf{w}\]<div class="constraint">\(\text{s.t. } \mathbf{w}^\top\mathbf{1}=1,\quad 0.05 \leq w_i \leq 0.60\)</div></div>
         </div>
-        <div class="th-card">
+        <div class="th-card winner">
           <div class="th-name">Max Sharpe (Tangency)</div>
           <span class="th-tag opt">Optimization</span>
-          <div class="th-body">Locate the tangency portfolio on the efficient frontier maximizing (μ_p − r_f) / σ_p. Uses rolling 36-month estimates of both expected returns and covariance. Most sensitive to estimation error; solved monthly via SLSQP with bounded weights to limit concentration.</div>
-          <div class="formula">max  (w'μ − r_f) / √(w'Σw)
-s.t. Σw_i = 1,  0.05 ≤ w_i ≤ 0.60</div>
+          <div class="th-body">Locate the tangency portfolio on the efficient frontier maximising the Sharpe ratio. Uses rolling 36-month estimates of expected returns and covariance. Solved monthly via SLSQP with bounded weights to limit concentration risk.</div>
+          <div class="formula-block">\[\max_{\mathbf{w}}\; \frac{\mathbf{w}^\top\boldsymbol{\mu} - r_f}{\sqrt{\mathbf{w}^\top\boldsymbol{\Sigma}\,\mathbf{w}}}\]<div class="constraint">\(\text{s.t. } \mathbf{w}^\top\mathbf{1}=1,\quad 0.05 \leq w_i \leq 0.60\)</div></div>
         </div></div><div class="theory-grid">
         <div class="th-card">
           <div class="th-name">Momentum + Trend Combo</div>
           <span class="th-tag trend">Combo</span>
-          <div class="th-body">Dual-filter: requires both a positive trend (price > 10-month SMA) AND positive 12-month absolute momentum. Stricter entry criteria reduce false signals and over-trading, but also exclude more opportunities — especially costly on monthly data with slow signals.</div>
-          <div class="formula">Signal_i = 1  iff  P_i > SMA_10(P_i)  AND  R_12m_i > 0
-w_i = Signal_i / Σ Signal_j</div>
+          <div class="th-body">Dual-filter: requires both a positive trend (price &gt; 10-month SMA) AND positive 12-month absolute momentum. Stricter entry reduces false signals but increases signal latency on monthly data.</div>
+          <div class="formula-block">\[\text{Signal}_i = \mathbf{1}\!\left[P_i > \overline{P}_i^{\,10m}\right] \cdot \mathbf{1}\!\left[R_i^{12m} > 0\right]\]<div class="constraint">\(w_i = \frac{\text{Signal}_i}{\sum_j \text{Signal}_j};\quad \text{equal weight if } \sum_j \text{Signal}_j = 0\)</div></div>
         </div></div>
   </div>
 
