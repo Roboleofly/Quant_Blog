@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-04-22",
+    "slug": "permanent-portfolio",
+    "title": "Permanent Portfolio: A Cross-Asset Allocation Study",
+    "subtitle": "NASDAQ · S&P 500 · Gold · CSI Dividend Index (A-Shares)",
+    "abstract": "We examine equal-weighted permanent portfolio performance (25% each) across four major global assets over 21.2 years. Annual rebalancing delivers CAGR 11.93% with Sharpe 0.75, outperforming buy-and-hold and higher-frequency strategies. Maximum drawdown is capped at −40.4%, versus −70.2% for the most volatile single constituent.",
+    "tags": [
+      "Asset Allocation",
+      "Backtesting",
+      "Rebalancing"
+    ],
+    "filename": "2026-04-22-permanent-portfolio.html",
+    "metrics": {
+      "CAGR": "11.93%",
+      "Sharpe": "0.75",
+      "Period": "2005-2026"
+    }
+  }
+]
