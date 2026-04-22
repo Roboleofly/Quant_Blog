@@ -16,5 +16,23 @@
       "Sharpe": "0.75",
       "Period": "2005-2026"
     }
+  },
+  {
+    "date": "2026-04-22",
+    "slug": "strategy-comparison",
+    "title": "Beyond Equal Weight: Nine Allocation Strategies Compared",
+    "subtitle": "Momentum · Risk Parity · Trend Following · Max Sharpe · Min Variance",
+    "abstract": "We test eight alternative allocation strategies against an equal-weight permanent portfolio baseline across four global assets (2005–2026). Max Sharpe optimization delivers the highest CAGR (13.76%) and Sharpe ratio (0.88), outperforming the baseline by +183bps annually. Risk Parity and Min Variance reduce drawdown below −38% while preserving near-baseline returns. Trend-following approaches underperform on monthly data.",
+    "tags": [
+      "Strategy Comparison",
+      "Factor Investing",
+      "Portfolio Optimization"
+    ],
+    "filename": "2026-04-22-strategy-comparison.html",
+    "metrics": {
+      "Best CAGR": "13.76%",
+      "Best Sharpe": "0.88",
+      "Strategies": "9"
+    }
   }
 ]
