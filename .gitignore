@@ -1,14 +1,17 @@
+# Python & data — local only, not deployed
+scripts/
+data/
+*.py
+*.csv
+*.png
 __pycache__/
 *.pyc
-*.pyo
 .DS_Store
 Thumbs.db
-*.egg-info/
 .env
 src/
-# keep PNGs out of git (large binaries) — regenerate with scripts
-*.png
-# old root-level files superseded by scripts/
+
+# Old root-level files
 /fetch_historical_data.py
 /generate_report.py
 /permanent_portfolio.py
