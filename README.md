@@ -4,26 +4,36 @@ Systematic investment research — asset allocation, backtesting, and quantitati
 
 **Live site:** https://roboleofly.github.io/Quant_Blog/
 
+---
+
+## What's in this repo
+
+Only the deployed web pages are tracked here. Scripts and data stay local.
+
+```
+Quant_Blog/
+├── index.html                          # Research portal homepage
+└── reports/
+    ├── _manifest.json                  # Report registry (date, title, abstract, tags)
+    └── YYYY-MM-DD-report-name.html     # Self-contained report pages
+```
+
 ## Adding a new report
 
-1. Run the analysis scripts in `scripts/`
-2. Update `scripts/generate_report.py` with the new report content and metadata
-3. Run `python scripts/generate_report.py` — this saves to `reports/` and rebuilds `index.html`
-4. Commit and push
+All analysis and generation happens locally, then only the HTML output is pushed:
 
-## Structure
+1. Run analysis scripts locally (`scripts/` — not in this repo)
+2. Run `python scripts/generate_report.py` — writes to `reports/` and rebuilds `index.html`
+3. Push the new files:
 
+```bash
+git add index.html reports/YYYY-MM-DD-*.html reports/_manifest.json
+git commit -m "Add report: title"
+git push
 ```
-├── index.html              # Auto-generated research index
-├── reports/
-│   ├── _manifest.json      # Report registry
-│   └── YYYY-MM-DD-*.html   # Individual reports (self-contained)
-├── scripts/
-│   ├── fetch_historical_data.py
-│   ├── plot_historical_data.py
-│   ├── permanent_portfolio.py
-│   ├── generate_report.py  # Generate + register a report
-│   └── build_index.py      # Rebuild index.html from manifest
-└── data/
-    └── historical_data_1990_2026.csv
-```
+
+## Reports
+
+| Date | Title |
+|------|-------|
+| 2026-04-22 | [Permanent Portfolio: Cross-Asset Allocation Study](reports/2026-04-22-permanent-portfolio.html) |
